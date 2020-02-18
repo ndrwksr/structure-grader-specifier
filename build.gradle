@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 13
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+
+    compile group: 'edu.kaiseran', name: 'structuregrader', version: '1.0-SNAPSHOT'
+
+    compileOnly 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+}
+
+java {
+    disableAutoTargetJvm()
+}
+
+javafx {
+    version = "11"
+    modules = ['javafx.controls', 'javafx.fxml']
+}
