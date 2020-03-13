@@ -152,8 +152,6 @@ public class MainController implements Initializable {
 	 */
 	@FXML
 	public void openSpecStackWasClicked() {
-		logTextArea.appendText("openSpecStackWasClicked()\n"); // TODO: Remove
-
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setSelectedExtensionFilter(
 				new FileChooser.ExtensionFilter(".spec files", ".spec")
@@ -179,8 +177,6 @@ public class MainController implements Initializable {
 	 */
 	@FXML
 	public void analyzeProjectWasClicked() {
-		logTextArea.appendText("analyzeProjectWasClicked()\n"); // TODO: Remove
-
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setSelectedExtensionFilter(
 				new FileChooser.ExtensionFilter(".jar files", ".jar")
@@ -204,8 +200,6 @@ public class MainController implements Initializable {
 	 */
 	@FXML
 	public void scanPackageWasClicked() {
-		logTextArea.appendText("scanPkgWasClicked()\n"); // TODO: Remove
-
 		pkgToScanSsp.set(pkgToScanField.getText());
 	}
 
@@ -214,8 +208,6 @@ public class MainController implements Initializable {
 	 */
 	@FXML
 	public void removeSpecWasClicked() {
-		logTextArea.appendText("removeSpecWasClicked()\n"); // TODO: Remove
-
 		// This isn't a rigorous cast, but we have complete control over the contents of the tree and only ever insert
 		// custom TreeItems which implement Removable.
 		// We could have subclassed TreeView, but it would have been a lot of code just to avoid this one line.
@@ -227,7 +219,6 @@ public class MainController implements Initializable {
 	 */
 	@FXML
 	public void clearPackageWasClicked() {
-		logTextArea.appendText('\n' + "resetProjectWasClicked()"); // TODO: Remove
 		classMapSop.set(null);
 	}
 
@@ -236,7 +227,6 @@ public class MainController implements Initializable {
 	 */
 	@FXML
 	public void specifyPackageWasClicked() {
-		logTextArea.appendText("confirmAndSpecifyWasClicked()\n"); // TODO: Remove
 		final ClassMapSuite classMapSuite = ClassMapSuite.ClassMapSuiteFactory.getDefaultInst().buildFromCollection(
 				classMapSop.get(),
 				classMapSop.get().getName(),
@@ -251,8 +241,6 @@ public class MainController implements Initializable {
 	 */
 	@FXML
 	public void exportWasClicked() {
-		logTextArea.appendText("exportWasClicked()\n"); // TODO: Remove
-
 		try {
 			final String json = ClassMapSuite.JsonHelper.toJson(classMapSuiteSop.get());
 			FileChooser fileChooser = new FileChooser();
@@ -271,7 +259,6 @@ public class MainController implements Initializable {
 	 */
 	@FXML
 	public void clearSpecificationStackWasClicked() {
-		logTextArea.appendText("clearSpecificationStackWasClicked()\n"); // TODO: Remove
 		classMapSuiteSop.set(null);
 	}
 
