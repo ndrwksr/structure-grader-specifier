@@ -1,9 +1,9 @@
-package com.kaiseran.structuregrader.specifier;
+package com.github.ndrwksr.structuregrader.specifier;
 
-import edu.kaiseran.structuregrader.core.*;
-import edu.kaiseran.structuregrader.core.specification.clazz.ClassMapSuite;
-import edu.kaiseran.structuregrader.core.visitor.Spec;
-import edu.kaiseran.structuregrader.core.wrapper.*;
+import com.github.ndrwksr.structuregrader.core.*;
+import com.github.ndrwksr.structuregrader.core.specification.clazz.ClassMapSuite;
+import com.github.ndrwksr.structuregrader.core.visitor.Spec;
+import com.github.ndrwksr.structuregrader.core.wrapper.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleObjectProperty;
@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
@@ -35,7 +36,7 @@ public class MainController implements Initializable {
 	@FXML
 	public TreeView<String> specificationTree;
 	@FXML
-	public Label nameLabel;
+	public TextArea descriptionTextArea;
 	@FXML
 	public TextField pkgToScanField;
 	@FXML
@@ -112,6 +113,17 @@ public class MainController implements Initializable {
 				// When an analyzed package is cleared, clear projectTree too
 				projectTree.setRoot(null);
 			}
+		});
+
+		// Set description when an item in the specification tree is selected.
+		specificationTree.getSelectionModel().selectedItemProperty().addListener(($1, $2, newValue) -> {
+			// Weak OOP, but gets the job done. Could be addressed by making a custom TreeView.
+			// TODO: Refactor so that all TreeItems descend from a superclass which has getSpecDescription()
+			final String description = (newValue instanceof SpecTreeItem)
+					? ((SpecTreeItem)(newValue)).getSpec().getSpecDescription()
+					: "No description available.";
+
+			descriptionTextArea.setText(description);
 		});
 
 		// When a package to scan has been selected, analyze it and set classMapSop to the new ClassMap
@@ -264,6 +276,7 @@ public class MainController implements Initializable {
 
 	/**
 	 * Generates a tree item for projectTree from a class. Recursive.
+	 *
 	 * @param clazz The class from which a TreeItem will be created.
 	 * @return the newly-generated TreeItem representing the provided class.
 	 */
@@ -345,12 +358,13 @@ public class MainController implements Initializable {
 
 	/**
 	 * Generates a TreeItem for a specification. Recursive.
-	 * @param rootSpec The specification from which to create a TreeItem.
-	 * @param prefix Used to include the key in a MapSpec in the generated TreeItem.
-	 *               For example, in the map for a class's fields, {a: VariableSuite, b: VariableSuite},
-	 *               this method would be called on both variable suites with 'a' and 'b' as the prefix respectively.
-	 * @param parentItem The parent tree item for this tree item. Used so that our custom tree items can keep track of
-	 *                   to whom they belong for the purpose of being able to remove themselves from the tree.
+	 *
+	 * @param rootSpec                   The specification from which to create a TreeItem.
+	 * @param prefix                     Used to include the key in a MapSpec in the generated TreeItem.
+	 *                                   For example, in the map for a class's fields, {a: VariableSuite, b: VariableSuite},
+	 *                                   this method would be called on both variable suites with 'a' and 'b' as the prefix respectively.
+	 * @param parentItem                 The parent tree item for this tree item. Used so that our custom tree items can keep track of
+	 *                                   to whom they belong for the purpose of being able to remove themselves from the tree.
 	 * @param removeFromParentCollection A Runnable which removes rootSpec from its parent specification. Used so that our
 	 *                                   custom tree items can remove themselves from the ClassMapSuite.
 	 * @return the generated TreeItem for the provided specification.
@@ -386,7 +400,7 @@ public class MainController implements Initializable {
 		// to look for it.
 		try {
 			final NamedSpecSet<? extends Spec> specSet = HasChildSet.class.cast(rootSpec).getChildSet();
-			final SetTreeItem setRootItem = new SetTreeItem(specSet.getName(), specSet);
+			final SetTreeItem setRootItem = new SetTreeItem("Specification Set: " + specSet.getName(), specSet);
 			setRootItem.setRemove(() -> {
 				specSet.clear();
 				rootItem.getChildren().remove(setRootItem);
@@ -400,7 +414,7 @@ public class MainController implements Initializable {
 
 		try {
 			final NamedSpecMap<?, ? extends Spec> specMap = HasChildMap.class.cast(rootSpec).getChildMap();
-			final MapTreeItem mapRootItem = new MapTreeItem(specMap.getName(), specMap);
+			final MapTreeItem mapRootItem = new MapTreeItem("Specification Map: " + specMap.getName(), specMap);
 			mapRootItem.setRemove(() -> {
 				specMap.clear();
 				rootItem.getChildren().remove(mapRootItem);
@@ -438,6 +452,7 @@ public class MainController implements Initializable {
 	 * A TreeItem for representing a single specification.
 	 */
 	private static class SpecTreeItem extends TreeItem<String> implements Removable {
+		@Getter
 		private final Spec spec;
 		@Setter
 		private Runnable remove;

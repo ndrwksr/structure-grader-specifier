@@ -1,4 +1,4 @@
-package com.kaiseran.structuregrader.specifier;
+package com.github.ndrwksr.structuregrader.specifier;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
