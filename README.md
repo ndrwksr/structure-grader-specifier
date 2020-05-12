@@ -1,15 +1,15 @@
-#Structure Grader - Specifier
+# Structure Grader - Specifier
 
-##Purpose
+## Purpose
 This application exists to serve as a more user-friendly way of creating and modifying specification stacks
 for user with Structure Grader - Core.
 
-##Installation
+## Installation
 These instructions assume that you are using IntelliJ Idea. If that's not the case,
 minor changes in procedure are required for providing JavaFX. There should be instructions on
 how to add the JavaFX libraries for your specific IDE online.
 
-####Required Programs:
+#### Required Programs:
 * [Maven](http://asdf.jkl.com)
 * [OpenJFX 13.0.2](https://gluonhq.com/products/javafx/)
 
