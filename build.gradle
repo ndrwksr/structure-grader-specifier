@@ -1,12 +1,18 @@
 plugins {
-    id 'java'
+    id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+javafx {
+    version = "14"
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 group 'com.github.ndrwksr'
 version '1.0-RELEASE'
 
-sourceCompatibility = 13
+sourceCompatibility = 11
+mainClassName = 'com.github.ndrwksr.structuregrader.specifier.Launcher'
 
 repositories {
     mavenCentral()
@@ -27,15 +33,21 @@ dependencies {
 
     implementation group: 'com.github.ndrwksr', name: 'structuregrader', version: '1.0-RELEASE'
 
-    compileOnly 'org.projectlombok:lombok:1.18.10'
-    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:win"
+    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:linux"
+    runtimeOnly "org.openjfx:javafx-graphics:$javafx.version:mac"
 }
 
 java {
     disableAutoTargetJvm()
 }
 
-javafx {
-    version = "11"
-    modules = ['javafx.controls', 'javafx.fxml']
+jar {
+    manifest {
+        attributes("Main-Class": mainClassName)
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
+

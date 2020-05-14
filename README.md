@@ -10,10 +10,10 @@ minor changes in procedure are required for providing JavaFX. There should be in
 how to add the JavaFX libraries for your specific IDE online.
 
 #### Required Programs:
-* [Maven](http://asdf.jkl.com)
+* [Maven](https://maven.apache.org/download.cgi)
 * [OpenJFX 13.0.2](https://gluonhq.com/products/javafx/)
 
-
+#### Run/Debug
 First, clone [Structure Grader - Core](https://github.com/ndrwksr/structure-grader-core).
 Then, run the Gradle task called publishStructureGraderCorePublicationToMavenLocal.
 As the name suggests, this will build Core and publish it to your local maven repository.
@@ -26,12 +26,8 @@ Then, assuming you're using IntelliJ Idea, go to
 Click the `Add` (+) button in the top left, select Java, then browse to wherever you downloaded
 your JavaFX SDK to, and select the `/libs` folder.
 
-Lastly, we need to add some VM arguments to the run configuration to ensure that the JDK can find the JFX libraries.
-Assuming you're using IntelliJ Idea, go to the `Launcher` class and attempt to run it. This will create a 
-new run configuration for you that will start the specifier. Note: This first attempt is expected to fail!
-Now that we have generated an incomplete run configuration, edit the configuration by selecting the run config dropdown
-and clicking "Edit Configurations...". Under "VM Options", add the following:
-```
---module-path YOUR\PATH\TO\JAVAFX\javafx-sdk-13.0.2\lib --add-modules=javafx.controls,javafx.fxml
-```
-Now, start the Launcher run configuration to run the specifier. 
+Create a run configuration by going to `Launcher` and run the main method by clicking the green arrow
+to the left of the main method.
+
+#### Build
+To build a multi-platform fat .jar, simply run the `jar` task via Gradle. That's it!
