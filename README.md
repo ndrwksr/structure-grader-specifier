@@ -4,6 +4,9 @@
 This application exists to serve as a more user-friendly way of creating and modifying specification stacks
 for user with Structure Grader - Core.
 
+## Demo Video
+https://vimeo.com/445669190
+
 ## Installation
 These instructions assume that you are using IntelliJ Idea. If that's not the case,
 minor changes in procedure are required for providing JavaFX. There should be instructions on
